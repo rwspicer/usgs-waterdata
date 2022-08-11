@@ -1,5 +1,4 @@
 
-from email.policy import default
 from . import generic
 from . import globals
 from .available import services

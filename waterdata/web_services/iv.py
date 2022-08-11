@@ -1,5 +1,3 @@
-
-from distutils.command.clean import clean
 from . import generic
 from . import globals
 from .available import services

@@ -1,4 +1,3 @@
-
 from . import generic
 from . import globals
 from .available import BASE_WATERDATA_URL, WATERDATA_URL

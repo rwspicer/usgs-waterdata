@@ -1,5 +1,3 @@
-
-from heapq import merge
 from . import generic
 from .available import services
 
