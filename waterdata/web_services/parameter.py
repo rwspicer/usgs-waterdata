@@ -1,18 +1,10 @@
 from . import generic
 from . import globals
-from .available import services
 
-from datetime import date
 
-default = lambda a, oa: True
 
-def valid_date_str(date_str):
-    try:
-        y, m, d = [int(f) for f in date_str.split('-')]
-        date(y,m,d)
-    except:
-        return False
-    return True
+
+
 
 # https://help.waterdata.usgs.gov/code/parameter_cd_query?fmt=rdb&group_cd=%
 # https://help.waterdata.usgs.gov/code/parameter_cd_query?fmt=rdb&inline=true&group_cd=%
@@ -21,10 +13,10 @@ def valid_date_str(date_str):
 # https://help.waterdata.usgs.gov/code/fixed_parms_query?fmt=rdb
 
 filters = {
-    'fmt': default,
-    'group_cd': default,
-    'inline': default,
-    'parm_nm_cd':default
+    'fmt': globals.default,
+    'group_cd': globals.default,
+    'inline': globals.default,
+    'parm_nm_cd': globals.default
 
 }
 

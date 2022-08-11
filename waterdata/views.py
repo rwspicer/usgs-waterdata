@@ -1,8 +1,11 @@
-from pandas import DataFrame, read_table
 from io import StringIO
+import re
+
+from pandas import DataFrame
+
 from .web_services import inventory, stat_cd, parameter
 from . import formats
-import re
+
 
 
 QUALIFICATION_CODES = {

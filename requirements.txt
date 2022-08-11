@@ -1,0 +1,8 @@
+pandas
+pyyaml
+validators
+BeautifulSoup4
+requests
+pyproj
+geojson
+numpy

@@ -1,6 +1,5 @@
 """
 """
-from inspect import Parameter
 import os
 
 WATERDATA_URL = "https://waterdata.usgs.gov/nwis/"

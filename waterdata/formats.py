@@ -1,8 +1,9 @@
 """
 
 """
-from pandas import DataFrame, read_table
 from io import StringIO
+
+from pandas import read_table
 import yaml
 
 def rdb_to_DataFrame(text):

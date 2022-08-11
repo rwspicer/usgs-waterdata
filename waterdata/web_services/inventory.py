@@ -1,12 +1,12 @@
+import copy
+
+import geojson 
+import pyproj
+import numpy as np
+
 from . import generic
 from . import globals
 from .available import BASE_WATERDATA_URL, WATERDATA_URL
-
-from datetime import date
-import geojson 
-import pyproj
-import copy
-import numpy as np
 
 
 filters = {

@@ -1,24 +1,10 @@
 from . import generic
-from .available import services
-
-from datetime import date
-
-default = lambda a, oa: True
-
-
-
-def valid_date_str(date_str):
-    try:
-        y, m, d = [int(f) for f in date_str.split('-')]
-        date(y,m,d)
-    except:
-        return False
-    return True
+from . import globals
 
 
 filters = {
-    'fmt': default,
-    'inline': default,
+    'fmt':  globals.default,
+    'inline':  globals.default,
 
 }
 
@@ -26,8 +12,6 @@ filters = {
 aliases = {
     'format': 'fmt'
 }
-
-
 
 
 

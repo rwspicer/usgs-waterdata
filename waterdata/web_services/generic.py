@@ -1,10 +1,13 @@
 """
 """
 import os
+import urllib.request
+
 import requests
 from bs4 import BeautifulSoup
-import urllib.request
 import validators
+
+
 from . import available
 
 class ValidURLError(Exception):
