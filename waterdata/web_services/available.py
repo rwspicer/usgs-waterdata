@@ -4,10 +4,12 @@ from inspect import Parameter
 import os
 
 WATERDATA_URL = "https://waterdata.usgs.gov/nwis/"
+WATERDATA_URL_2 = 'https://nwis.waterdata.usgs.gov/usa/nwis/'
 BASE_WATERDATA_URL = "https://waterdata.usgs.gov"
 WATERSERVICES_URL = "https://waterservices.usgs.gov/nwis/"
 PARAMETER_URL = 'https://help.waterdata.usgs.gov/code/parameter_cd_nm_query'
 FIXED_PARAMETER_URL = 'https://help.waterdata.usgs.gov/code/fixed_parms_query'
+STATS_CD_URL = "https://help.waterdata.usgs.gov/stat_code"
 
 
 class AvailableServiceError(Exception):
@@ -16,7 +18,9 @@ class AvailableServiceError(Exception):
 
 services = [
     "iv", "uv", "rt", "dv", "pk", "sv", "gw", "qw", "id", "aw", "ad",
-    "site", 'parameter', 'fixed-parameter', "gwlevels", 'inventory'
+    "site", 
+    'parameter', 'fixed-parameter', "gwlevels", 
+    'inventory', 'daily-data', 'stat-cd', 'peak', 'measurements', 'qwdata'
 ]
 
 names = {
@@ -33,7 +37,8 @@ names = {
     "ad": "Annual Water Data Reports", 
     "site": "Site Metadata",
     'parameter': 'parameter code lookup', 
-    'fixed-parameter': 'fixed parameter code lookup'
+    'fixed-parameter': 'fixed parameter code lookup',
+    
 }
 
 descriptions = {
@@ -88,8 +93,14 @@ def get_url(service):
         url = os.path.join(PARAMETER_URL, service)
     elif service == 'fixed-parameter':
         url = os.path.join(FIXED_PARAMETER_URL, service)
-    elif service in ['inventory']:
+    elif service == 'stat-cd':
+        url = STATS_CD_URL
+    elif service in ['inventory', 'daily-data', 'measurements']:
+        if service == 'daily-data':
+            service = 'dv'
         url = os.path.join(WATERDATA_URL, service)
+    elif service in ['peak', 'qwdata']:
+        url = os.path.join(WATERDATA_URL_2, service)
     else:
         url = os.path.join(WATERSERVICES_URL, service)
     return url

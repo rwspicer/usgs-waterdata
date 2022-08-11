@@ -22,11 +22,11 @@ def execute(urlbase, **kwargs):
     args = '?' + args.replace(', ',',').replace('[','').replace(']','')
 
     url = os.path.join(urlbase, args)
-
+    print(url)
     if 'https://' not in url:
         url = 'https://' + url
    
-        print(url)
+        # print(url)
     if not validators.url(url):
         raise ValidURLError('URL invalid: %s' % url)
 
@@ -43,14 +43,18 @@ def call(service, **kwargs):
     """
     """
     base_url = available.get_url(service)
+    
     return execute(base_url, **kwargs)
 
 def html(service, parser, **kwargs):
     base_url = available.get_url(service)
-    args = '&'.join([ '%s=%s' % (k, kwargs[k]) for k in kwargs])
-    args = '?' + args.replace(', ',',').replace('[','').replace(']','')
-    url = os.path.join(base_url,args)
-    
+    if len(kwargs) > 0:
+        args = '&'.join([ '%s=%s' % (k, kwargs[k]) for k in kwargs])
+        args = '?' + args.replace(', ',',').replace('[','').replace(']','')
+        url = os.path.join(base_url,args)
+    else:
+        url = base_url
+    # print(url)
     fp = urllib.request.urlopen(url)
     html = BeautifulSoup(fp, "html.parser")
     return parser(html, url)
