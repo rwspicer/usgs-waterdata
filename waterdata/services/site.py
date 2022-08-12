@@ -38,6 +38,20 @@ aliases.update(globals.aliases)
 
 
 def call(**kwargs):
+    """calls service to info on sites
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.site.filters,
+        waterdata.services.globals.filters, and 
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
 
     clean_args = globals.validate_args(kwargs, filters, aliases)
 

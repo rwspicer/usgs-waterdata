@@ -1,3 +1,11 @@
+"""
+Simple Daily Data Service
+-------------------------
+
+Access to waterdata.usgs.gov/nwis/dv/? which is a less robust version of 
+the waterservices dv api accessed in waterdata.services.dv which should be
+used instead in most cases.  
+"""
 from . import generic
 from . import globals
 
@@ -24,6 +32,19 @@ aliases = {
 
 
 def call(**kwargs):
+    """calls service to get daily waterdata
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.daily_data.filters
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
     kwargs['format'] = 'rdb'
 
     clean_args = globals.validate_args(kwargs, filters, aliases)

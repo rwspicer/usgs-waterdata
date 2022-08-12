@@ -15,6 +15,19 @@ aliases = {
 # https://waterdata.usgs.gov/nwis/measurements?site_no=15798700&agency_cd=USGS&format=rdb_expanded
 
 def call(**kwargs):
+    """calls service to access streamflow field measurements 
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.measurements.filters,
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
     if not 'format' in kwargs:
         kwargs['format'] = 'rdb_expanded'
 

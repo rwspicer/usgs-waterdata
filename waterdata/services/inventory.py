@@ -229,7 +229,20 @@ def inventory_to_geoJSON(site_inventory):
 
 
 def call(**kwargs):
+    """Sudo service to fetch inventory data from html inventory website for a 
+    NWIS site
 
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.inventory.filters,
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
     clean_args = globals.validate_args(kwargs, filters, aliases)
     if 'format' in clean_args:
         format = clean_args['format'] 

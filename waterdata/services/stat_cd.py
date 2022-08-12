@@ -29,6 +29,19 @@ def parse_response(html, url):
     return stats
 
 def call(**kwargs):
+    """sudo service to access statistic code descriptions
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.stat_cd.filters,
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
 
 
     clean_args = globals.validate_args(kwargs, filters, aliases)

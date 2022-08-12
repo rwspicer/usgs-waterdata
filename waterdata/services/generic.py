@@ -25,7 +25,7 @@ def execute(urlbase, **kwargs):
     args = '?' + args.replace(', ',',').replace('[','').replace(']','')
 
     url = os.path.join(urlbase, args)
-    print(url)
+    # print(url)
     if 'https://' not in url:
         url = 'https://' + url
    

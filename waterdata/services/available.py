@@ -1,7 +1,14 @@
 """
+Available Services
+------------------
+
+Information on available web_services
+
 """
 import os
 
+
+### URLS
 WATERDATA_URL = "https://waterdata.usgs.gov/nwis/"
 WATERDATA_URL_2 = 'https://nwis.waterdata.usgs.gov/usa/nwis/'
 BASE_WATERDATA_URL = "https://waterdata.usgs.gov"
@@ -14,7 +21,7 @@ STATS_CD_URL = "https://help.waterdata.usgs.gov/stat_code"
 class AvailableServiceError(Exception):
     pass
 
-
+### available web_services
 services = [
     "iv", "uv", "rt", "dv", "pk", "sv", "gw", "qw", "id", "aw", "ad",
     "site", 
@@ -22,6 +29,7 @@ services = [
     'inventory', 'daily-data', 'stat-cd', 'peak', 'measurements', 'qwdata'
 ]
 
+# available web_services name maps
 names = {
     "iv": "Instantaneous values", 
     "uv": "Unit values", 
@@ -37,6 +45,13 @@ names = {
     "site": "Site Metadata",
     'parameter': 'parameter code lookup', 
     'fixed-parameter': 'fixed parameter code lookup',
+    "gwlevels": "Alias Groundwater levels",
+    'inventory': "site data inventory lookup", 
+    'daily-data': "Alternate to Daily values" , 
+    'stat-cd': "statistics service" ,
+    'peak': "Peak Streamflow", 
+    'measurements': "Streamlow field measurements ", 
+    'qwdata': "Water-quality", 
     
 }
 
@@ -80,10 +95,29 @@ descriptions = {
     "ad": "Sites included in USGS Annual Water Data Reports External Link",
     "site": "Site Metadata",
     'parameter': 'parameter code lookup', 
-    'fixed-parameter': 'fixed parameter code lookup'
+    'fixed-parameter': 'fixed parameter code lookup',
+    "gwlevels": "Alias Groundwater levels",
+    'inventory': "site data inventory lookup", 
+    'daily-data': "Older Alternate to Daily values (use dv in most cases instead)" , 
+    'stat-cd':"statistics service (Not implemented by python code)" ,
+    'peak': "Peak Streamflow ", 
+    'measurements': "Streamlow field measurements ", 
+    'qwdata': "Water-quality (limited implmentation in python code)", 
 }
 
+
 def get_url(service):
+    """ Gets the url for the service
+
+    Parameters
+    ----------
+    service: str
+        a service defined in waterdata.services.available.services
+
+    returns
+    -------
+    a url
+    """
     if not service in services:
         raise AvailableServiceError (
             "service %s is not a valid web service" % service

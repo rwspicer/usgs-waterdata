@@ -2,7 +2,6 @@ from . import generic
 from . import globals
 
 
-
 filters = {
     'statCd': lambda a, oa: len(a.split(',')) <= 20 and all([len(p) == 5 for p in a.split(',')])
 }
@@ -20,6 +19,21 @@ aliases.update(globals.value_aliases)
 
 
 def call(**kwargs):
+    """calls service to get daily water data mostly discharge and gage-height
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.dv.filters,
+        waterdata.services.globals.filters, and 
+        waterdata.services.globals.value_filters.
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
 
     clean_args = globals.validate_args(kwargs, filters, aliases)
     

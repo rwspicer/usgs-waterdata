@@ -14,6 +14,21 @@ aliases.update(globals.value_aliases)
 
 
 def call(**kwargs):
+    """calls service to get water level data
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.gwlevels.filters,
+        waterdata.services.globals.filters, and 
+        waterdata.services.globals.value_filters.
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
 
     clean_args = globals.validate_args(kwargs, filters, aliases)
     

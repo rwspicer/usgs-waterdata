@@ -30,13 +30,37 @@ aliases = {
 
 
 def call(**kwargs):
+    """calls service to look up a parameter code
 
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.parameter.filters,
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
+    """
     clean_args = globals.validate_args(kwargs, filters, aliases)
     response = generic.call('parameter', **clean_args)
     return response
 
 def lookup(**kwargs):
-    """
+    """Sudo service look up multiple param codes using parameter.call and 
+    merge response
+
+    Parameters
+    ----------
+    **kwargs:
+        keyword arguments defined in waterdata.services.parameter.filters,
+
+    Returns
+    -------
+    response:
+        format is defined by kwargs['format']
+
     """
     kwargs['fmt'] = 'rdb'
     param_codes = kwargs['param_codes']
