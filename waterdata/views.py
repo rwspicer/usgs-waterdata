@@ -3,7 +3,7 @@ import re
 
 from pandas import DataFrame
 
-from .web_services import inventory, stat_cd, parameter
+from .services import inventory, stat_cd, parameter
 from . import formats
 
 
@@ -24,10 +24,13 @@ def qc_map_function (qc):
         return QUALIFICATION_CODES[qc]
     multi_qc = []
     for sqc in qc.split(':'):
-        multi_qc.append(QUALIFICATION_CODES[sqc])
+        try:
+            multi_qc.append(QUALIFICATION_CODES[sqc])
+        except:
+            multi_qc.append(sqc)
     return ','.join(multi_qc)
 
-def bulid_summary_table(sites, inventory_callback=inventory.call, verbose = False):
+def build_summary_table(sites, inventory_callback=inventory.call, verbose = False):
 
     site_list = []
     for idx in range(len(sites)):
@@ -65,7 +68,11 @@ def bulid_summary_table(sites, inventory_callback=inventory.call, verbose = Fals
 def readable_rdb_DatafFame(callback, **kwargs):
     
     kwargs['format'] = 'rdb'
-    response = callback(**kwargs)
+    if type(callback) is str:
+        response = callback
+    else:
+        response = callback(**kwargs)
+
     table = formats.rdb_to_DataFrame(response)
     table = table.fillna('')  ## fill na with empty str
 

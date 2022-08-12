@@ -1,6 +1,8 @@
 __version__ = '0.1.0'
+__url__ = 'https://github.com/rwspicer/usgs-waterdata'
 
-from . import web_services
+
+from . import services
 from . import formats, views
 # from .web_services import *
 

@@ -2,7 +2,6 @@
 
 """
 from io import StringIO
-
 from pandas import read_table
 import yaml
 
@@ -17,14 +16,20 @@ def rdb_to_header(text):
 
 def save_as_rdb(filename, callback, **kwargs):
     kwargs['format'] = 'rdb'
-    response = callback(**kwargs)
+    if type(callback) is str:
+        response = callback
+    else:
+        response = callback(**kwargs)
     with open(filename, 'w') as fd:
         fd.write(response)
 
 def save_as_csv(filename, callback, **kwargs):
     
     kwargs['format'] = 'rdb'
-    response = callback(**kwargs)
+    if type(callback) is str:
+        response = callback
+    else:
+        response = callback(**kwargs)
     
     header =  rdb_to_header(response)
     table = rdb_to_DataFrame(response)
