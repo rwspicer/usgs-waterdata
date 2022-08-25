@@ -1,10 +1,9 @@
+"""
+Parameter Service
+-----------------
+"""
 from . import generic
 from . import globals
-
-
-
-
-
 
 # https://help.waterdata.usgs.gov/code/parameter_cd_query?fmt=rdb&group_cd=%
 # https://help.waterdata.usgs.gov/code/parameter_cd_query?fmt=rdb&inline=true&group_cd=%
@@ -12,6 +11,7 @@ from . import globals
 # https://help.waterdata.usgs.gov/code/parameter_cd_query?fmt=rdb&group_cd=BIO&inline=true
 # https://help.waterdata.usgs.gov/code/fixed_parms_query?fmt=rdb
 
+# filters
 filters = {
     'fmt': globals.default,
     'group_cd': globals.default,
@@ -24,10 +24,6 @@ filters = {
 aliases = {
     'format': 'fmt'
 }
-
-
-
-
 
 def call(**kwargs):
     """calls service to look up a parameter code

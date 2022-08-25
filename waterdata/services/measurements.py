@@ -1,6 +1,13 @@
+"""
+Measurements
+------------
+
+Measurement lookup service 
+"""
 from . import generic
 from . import globals
 
+# filters
 filters = {
     'site_no': globals.default,
     'agency_cd': globals.default,
@@ -8,7 +15,7 @@ filters = {
 
 }
 
-
+# aliases
 aliases = {
 }
 
@@ -26,7 +33,6 @@ def call(**kwargs):
     -------
     response:
         format is defined by kwargs['format']
-
     """
     if not 'format' in kwargs:
         kwargs['format'] = 'rdb_expanded'

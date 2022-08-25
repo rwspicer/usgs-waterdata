@@ -1,3 +1,7 @@
+"""
+Site Inventory Simulated Service
+-------------------------------
+"""
 import copy
 
 import geojson 
@@ -8,7 +12,7 @@ from . import generic
 from . import globals
 from .available import BASE_WATERDATA_URL, WATERDATA_URL
 
-
+# Filters
 filters = {
     'site_no':globals.default,
     'agency_cd':globals.default,
@@ -22,6 +26,18 @@ aliases = {
 
 
 def convert_degrees(degrees_in):
+    """Coverts between Degrees, minutes, seconds  and decimal degrees
+    
+    Parameters
+    ----------
+    degrees_in: str or float
+        if str matches format %i°%02i'%02i"
+        
+    Returns 
+    -------
+    str or float
+        opposite format of what was passed
+    """
     if type(degrees_in) is str:
         degrees_in = degrees_in.strip()
         degrees, mmss = degrees_in.split('°')
@@ -34,10 +50,21 @@ def convert_degrees(degrees_in):
         ss = (decimal * 60 - mm) * 60
         return '''%i°%02i'%02i"''' % (degrees, mm, ss)
 
+
 def parse_response(html, url):
+    """parses Inventory  HTML response
 
+    Parameters
+    ----------
+    html: BeautifulSoup
+        BeautifulSoup parser
+    url: str
+        url called
     
-
+    Returns 
+    -------
+    dict
+    """
     site_inventory = {}
     site_table = html.find("div", {"id":"stationTable"})
 
@@ -51,7 +78,6 @@ def parse_response(html, url):
     site_inventory["url"] = url
 
     site_inventory["site-type"] = html.find('h3').text.strip()
-
 
     site_inventory['geolocation'] = {}
     site_inventory['inventory'] = {}
@@ -82,8 +108,6 @@ def parse_response(html, url):
             # else:
             #     print('>>', text, '<<')
             #     raise(KeyError)
-
-
             site_inventory['geolocation']['region'] = region.strip()
             site_inventory['geolocation']['state'] = state.strip()
             site_inventory['geolocation']['huc8'] = int(unit.strip()[-8:])
@@ -161,8 +185,8 @@ def parse_response(html, url):
                 if ix == 3: 
                     site_inventory['inventory'][data_type]['parameters']\
                         [param]['count'] = int(text) if len(text) >0 else None
+
         elif len(cols)==1:
-            
             url = BASE_WATERDATA_URL+cols[0].find('a')['href']
             text = cols[0].text.strip()
             data_type = text
@@ -170,7 +194,6 @@ def parse_response(html, url):
                 "url": url,
                 "parameters": {}
             }
-
         else:
             pass
 
@@ -213,8 +236,17 @@ def geolocation_to_wgs84(site_inventory):
     return t.transform(*[long,lat,elev])
     
 
-
 def inventory_to_geoJSON(site_inventory):
+    """Converts site inventory dict to geojson
+
+    Parameters
+    ----------
+    site_inventory: dict
+
+    Returns
+    -------
+    geojson.Feature
+    """
     point = geojson.Point(geolocation_to_wgs84(site_inventory))
 
     properties = copy.deepcopy(site_inventory)

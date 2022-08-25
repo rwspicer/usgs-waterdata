@@ -1,6 +1,12 @@
+"""
+Globals
+-------
+
+Global values and functions for services
+"""
 from datetime import date
 
-
+# Default filter function
 default = lambda a, oa: True
 
 STATES = [
@@ -22,6 +28,16 @@ SITE_TYPES = [
 LOCATION_FILTERS = ['sites', 'stateCd', 'huc', 'bBox', 'countyCd']
 
 def contains_location_filter(arguments):
+    """tests if augments contains a location filter
+    
+    Parameters
+    ----------
+    arguments: dict
+
+    Returns
+    -------
+    bool
+    """
     for f in arguments:
         if f in LOCATION_FILTERS:
             return True
@@ -30,6 +46,17 @@ def contains_location_filter(arguments):
 
 
 def valid_date_str(date_str): # need to have a datetime version
+    """Tests if date string has valid forma
+    
+    parameters
+    ----------
+    date_str: string
+
+    Returns
+    -------
+    Bool 
+        True if format is 'YYYY-MM-DD'
+    """
     try:
         y, m, d = [int(f) for f in date_str.split('-')]
         date(y,m,d)
@@ -37,7 +64,7 @@ def valid_date_str(date_str): # need to have a datetime version
         return False
     return True
 
-
+## Default filters that most services use
 filters = {
     'sites': lambda a, oa: len(a.split(',')) <= 100 and not contains_location_filter(oa),
     'stateCd': lambda a, oa: a in STATES and not contains_location_filter(oa), 
@@ -64,13 +91,13 @@ filters = {
     'holeDepthMax': default,
 }
 
-## value filters 
+## value filters that many services
 value_filters = {
     'indent': lambda a, oa: a in ['on','off'],
     'parameterCd': lambda a, oa: len(a.split(',')) <= 100 and all([len(p) == 5 for p in a.split(',')]),
 }
 
-
+## aliases for default services
 aliases = {
     'site': 'sites',
     'location': 'sites',
@@ -97,6 +124,7 @@ aliases = {
     'holeDepthMaxVa': 'holeDepthMax',
 }
 
+# Aliases for value filters
 value_aliases =  {
     'variable': 'parameterCd', 
     'parameterCds': 'parameterCd', 
@@ -106,7 +134,26 @@ value_aliases =  {
     'parmCd':'parameterCd'
 }
 
+
 def validate_args(kwargs, filters, aliases):
+    """Checks that arguments pass filter functions
+
+    Parameters
+    ----------
+    kwargs: dict
+        dict of Rest Service parameters
+    filters: dict
+        dict of validator function matching format <function __main__.f(a, oa)>
+        and returns an bool, where a is the agumnet and oa is the list of
+        other arguments
+    aliases:
+        dict mapping alias names to cannon names
+    
+    Retunrs
+    -------
+    dict
+        cleaned and cannon argument dict
+    """
     clean_args = {}
     for arg in kwargs:
         if arg in aliases:

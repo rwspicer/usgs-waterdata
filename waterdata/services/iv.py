@@ -1,14 +1,18 @@
+"""
+Instantaneous values Service
+----------------------------
+"""
 from . import generic
 from . import globals
 
-
+# Filters
 filters = {}
 
 filters.update(globals.filters)
 filters.update(globals.value_filters)
 filters['format'] = lambda a, oa: a in ['waterml', 'waterml,1.1', 'waterml,2.0' , 'rdb', 'rdb,1.0', 'json', 'json,1.1']
 
-
+# Aliases
 aliases = {}
 aliases.update(globals.aliases)
 aliases.update(globals.value_aliases)

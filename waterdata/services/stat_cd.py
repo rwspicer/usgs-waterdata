@@ -1,19 +1,34 @@
+"""
+Statistics Codes
+----------------
+
+NWIS Statistics look up simulated service
+"""
 from . import generic
 from . import globals
 
+# filters
 filters = {
     'stat_code': lambda a, oa: all([len(sc) == 5 for sc in a.split(',')]),
     'format': lambda a, oa: a in ['dict', 'json']
 }
-
 
 # aliases 
 aliases = {
     'stat_codes': 'stat_code'
 }
 
-
 def parse_response(html, url):
+    """
+    Parse the HTML response
+
+    Parameters
+    ----------
+    html: BeautifulSoup
+        BeautifulSoup html parser
+    url: string
+        not used 
+    """
 
     content = html.find('div', {"id":"content"})
     stats_rows = content.find('table').find_all('tr')
@@ -40,10 +55,7 @@ def call(**kwargs):
     -------
     response:
         format is defined by kwargs['format']
-
     """
-
-
     clean_args = globals.validate_args(kwargs, filters, aliases)
     if clean_args is None:
         return None

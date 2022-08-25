@@ -1,7 +1,11 @@
+"""
+Fixed Parameter lookup service
+------------------------------
+"""
 from . import generic
 from . import globals
 
-
+# FILTERS
 filters = {
     'fmt':  globals.default,
     'inline':  globals.default,
@@ -12,8 +16,6 @@ filters = {
 aliases = {
     'format': 'fmt'
 }
-
-
 
 def call(**kwargs):
     """used to lookup fixed parameter codes

@@ -1,15 +1,18 @@
+"""
+Peak Flow Service
+-----------------
+"""
 from . import generic
 from . import globals
 
-
-
+# Filters
 filters = {
     'site_no': globals.default,
     'agency_cd': globals.default,
     'format': lambda a, oa: a == 'rdb',
 }
 
-
+# aliases
 aliases = {
 }
 

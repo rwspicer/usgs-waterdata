@@ -1,13 +1,16 @@
-from io import StringIO
+"""
+Views
+-----
+
+Code that crates useful views, tables, and other aggregations of data
+"""
+# from io import StringIO
 import re
-
 from pandas import DataFrame
-
 from .services import inventory, stat_cd, parameter
 from . import formats
 
-
-
+## maps qualification codes to human read able strings
 QUALIFICATION_CODES = {
     'e': 'edited/estimated', #The value has been edited or estimated by USGS personnel'
     '<': 'value is known to be less than reported value', #'The Value is known to be less than reported value.
@@ -19,7 +22,18 @@ QUALIFICATION_CODES = {
 }
 
 def qc_map_function (qc):
+    """Function that maps codes or multiple codes seperated by ':' to 
+    human readable strings
 
+    Parameters
+    ----------
+    qc: str
+        string of qc codes from NWIS data
+
+    Returns
+    -------
+    string
+    """
     if qc in QUALIFICATION_CODES:
         return QUALIFICATION_CODES[qc]
     multi_qc = []
@@ -30,7 +44,24 @@ def qc_map_function (qc):
             multi_qc.append(sqc)
     return ','.join(multi_qc)
 
-def build_summary_table(sites, inventory_callback=inventory.call, verbose = False):
+def build_summary_table(
+        sites, inventory_callback=inventory.call, verbose = False
+    ):
+    """Build a summary table of sites with locations and available data
+    streams(I.e daily values, field surveys, ...)
+
+    Parameters
+    ----------
+    sites: list
+        list of site ids to summarize
+    inventory_callback: function  
+        function to call inventory service
+    verbose: bool
+    
+    Returns
+    -------
+    DataFrame
+    """
 
     site_list = []
     for idx in range(len(sites)):
@@ -65,8 +96,21 @@ def build_summary_table(sites, inventory_callback=inventory.call, verbose = Fals
     st[st.columns[8:]] = st[st.columns[9:]].fillna(False) 
     return st
 
+
 def readable_rdb_DatafFame(callback, **kwargs):
-    
+    """Converts rdb to DataFrame and converts codes to human readable strings
+
+    Parameters
+    ----------
+    callback: function
+        web service call function 
+    kwargs: dict
+        keyword arguments for callback
+
+    Returns
+    -------
+    DataFrame
+    """
     kwargs['format'] = 'rdb'
     if type(callback) is str:
         response = callback
@@ -112,6 +156,17 @@ def readable_rdb_DatafFame(callback, **kwargs):
 
 
 def statistics_cd_DataFrame(stats):
+    """Creates a table of the passed statistic codes
+
+    Parameters
+    ----------
+    stats: list 
+        list of statistic codes to lookup
+
+    Returns
+    -------
+    DataFrame
+    """
     t = DataFrame(stat_cd.call(stat_code=','.join(stats))).T
     t.index.name='code'
     return t

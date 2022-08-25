@@ -1,9 +1,14 @@
+"""
+Site Service
+------------
+
+Site Service
+"""
 from . import generic
 from . import globals
 from .available import services
 
-
-
+# Filters
 filters = {
     'siteOutput': lambda a, oa: a in ['basic','expanded'] and (not 'seriesCatalogOutput' in oa or 'outputDataTypeCd' in oa ), 
     'seriesCatalogOutput': lambda a, oa: a in ['true','false'] and not 'SiteOutput' in oa,
@@ -15,7 +20,6 @@ filters = {
 
 filters.update(globals.filters)
 filters['format'] = lambda a, oa: a in ['rdb', 'rdb,1.0', 'gm', 'gm,1.0', 'ge', 'ge,1.0', 'mapper', 'mapper,1.0']
-
 
 # aliases 
 aliases = {
@@ -34,7 +38,6 @@ aliases = {
 }
 
 aliases.update(globals.aliases)
-
 
 
 def call(**kwargs):
