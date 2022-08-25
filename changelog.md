@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0 [2022-08-25]
+### added
+- license
+
 ## 0.2.1 [2022-08-25]
 ### updated
 - readme.md
