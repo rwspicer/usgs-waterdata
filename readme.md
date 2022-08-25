@@ -10,8 +10,8 @@ python interface to USGS NWIS waterdata sites and services
 ## How to use
 
 all services and pseudo-services  are called with the same format passing 
-filters as keyword arguments to the serrvices call function. See each
-services' domination for valid filters. They return the response in the 
+filters as keyword arguments to the services call function. See each
+services' documentation for valid filters. They return the response in the 
 format specified. 
 
 ```
@@ -27,7 +27,7 @@ response = waterdata.services.dv.call(
 
 `waterdata.formats` and `waterdata.views` also provide functions for converting
 and saving responses to useful formats. These functions typically take the 
-service function and keywords filters as some arguments. See the documntation
+service function and keywords filters as some arguments. See the documentation
 in `waterdata.formats` and `waterdata.views`  for more info. For example you
 can save a response as a csv file. 
 
